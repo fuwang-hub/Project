@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>自助变现产品日报 · 每天 5 个</title>
+<meta name="description" content="每天 5 个可照做的自助变现产品：是什么 / 怎么收钱 / 模式为什么成立 / 我能不能做 / 上架到哪 / 证据出处。">
+<style>
+  :root{
+    --bg:#f6f7f9; --panel:#fff; --ink:#14181f; --ink-2:#4a5361; --ink-3:#8b95a3;
+    --line:#e3e6ec; --line-2:#eef0f4;
+    --ok:#0f8a4d; --ok-bg:#e8f6ee;
+    --warn:#9a6400; --warn-bg:#fdf3e0;
+    --bad:#b3261e; --bad-bg:#fdecea;
+    --accent:#1f5fd0; --accent-bg:#eaf1fd;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+       font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+  /* ---------- 顶栏 ---------- */
+  header.top{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:10}
+  .top-in{display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+          max-width:1040px;margin:0 auto;padding:12px 20px}
+  .brand{font-weight:700;font-size:16px;letter-spacing:-.01em;white-space:nowrap}
+  .brand span{color:var(--ink-3);font-weight:500;font-size:13px;margin-left:8px}
+  nav.tabs{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+  nav.tabs a{font-size:13px;color:var(--ink-2);padding:5px 10px;border-radius:999px}
+  nav.tabs a:hover{background:var(--line-2);text-decoration:none}
+  nav.tabs a.primary{background:var(--accent-bg);color:var(--accent);font-weight:600}
+
+  /* ---------- 通用块 ---------- */
+  main{padding:26px 0 60px}
+  section{margin:0 0 34px}
+  h2{font-size:19px;margin:0 0 4px;letter-spacing:-.01em;display:flex;
+     align-items:center;gap:10px;flex-wrap:wrap}
+  h2 .count{font-size:13px;font-weight:600;color:var(--ink-3);background:var(--line-2);
+            border-radius:999px;padding:2px 9px}
+  .sub{color:var(--ink-2);font-size:13.5px;margin:0 0 14px}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+         padding:16px 18px}
+  .muted{color:var(--ink-3)}
+  code{font-family:var(--mono);font-size:12.5px;background:var(--line-2);
+       padding:1px 5px;border-radius:5px}
+
+  /* ---------- 状态条 ---------- */
+  .status{display:flex;gap:10px;align-items:flex-start;border-radius:var(--radius);
+          padding:12px 16px;font-size:13.5px;margin-bottom:18px;
+          background:var(--warn-bg);color:#5c3d00;border:1px solid #f0dcb4}
+  .status b{color:var(--warn)}
+  .status.ok{background:var(--ok-bg);color:#0a4c2c;border-color:#c4e6d3}
+  .status.ok b{color:var(--ok)}
+
+  /* ---------- 基准率 ---------- */
+  .bench{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+  .bench .cell{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+               padding:14px 16px}
+  .bench .n{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+  .bench .n.bad{color:var(--bad)}
+  .bench .l{font-size:12.5px;color:var(--ink-2);margin-top:2px}
+  .bench .ask{grid-column:1/-1;font-size:13px;color:var(--ink-2);
+              background:var(--panel);border:1px dashed var(--line);
+              border-radius:var(--radius);padding:12px 16px}
+
+  /* ---------- 产品卡 ---------- */
+  .products{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+        overflow:hidden}
+  .card-h{display:flex;align-items:center;gap:12px;padding:13px 18px;
+          border-bottom:1px solid var(--line-2);flex-wrap:wrap}
+  .card-h .no{font-family:var(--mono);font-size:12px;color:var(--ink-3);
+              border:1px solid var(--line);border-radius:6px;padding:1px 7px}
+  .card-h .name{font-weight:650;font-size:15.5px;letter-spacing:-.01em}
+  .card-h .meta{color:var(--ink-3);font-size:12.5px}
+  .chip{margin-left:auto;font-size:12.5px;font-weight:650;border-radius:999px;
+        padding:3px 11px;white-space:nowrap}
+  .chip.todo{background:var(--accent-bg);color:var(--accent)}
+  .chip.lead{background:var(--warn-bg);color:var(--warn)}
+  .chip.no{background:var(--bad-bg);color:var(--bad)}
+  .chip.blank{background:var(--line-2);color:var(--ink-3);font-weight:600}
+
+  .fields{display:grid;grid-template-columns:132px 1fr}
+  .fields > div{padding:10px 18px;border-bottom:1px solid var(--line-2);font-size:13.5px}
+  .fields > div:nth-last-child(-n+2){border-bottom:0}
+  .fields .k{color:var(--ink-2);background:#fbfcfd;font-weight:600;font-size:13px;
+             border-right:1px solid var(--line-2)}
+  .fields .v{color:var(--ink-3)}
+  .fields .v .empty{color:var(--ink-3)}
+  .fields .v.ev{font-family:var(--mono);font-size:12.5px}
+
+  /* ---------- 表格 ---------- */
+  table{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--panel);
+        border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  th,td{text-align:left;padding:9px 14px;border-bottom:1px solid var(--line-2);
+        vertical-align:top}
+  th{background:#fbfcfd;font-size:12.5px;color:var(--ink-2);font-weight:650;
+     white-space:nowrap}
+  tr:last-child td{border-bottom:0}
+  td.k{white-space:nowrap;font-weight:600}
+  .empty-row td{color:var(--ink-3);font-style:normal}
+
+  /* ---------- 规则区 ---------- */
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+  .rule h3{font-size:14px;margin:0 0 8px;letter-spacing:-.01em}
+  .rule ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--ink-2)}
+  .rule li{margin:3px 0}
+  .rule li b{color:var(--ink)}
+
+  footer{border-top:1px solid var(--line);background:#fff;color:var(--ink-3);
+         font-size:12.5px;padding:18px 0 26px}
+  footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+
+  @media (max-width:620px){
+    .fields{grid-template-columns:1fr}
+    .fields .k{border-right:0;border-bottom:0;padding-bottom:2px;background:transparent}
+    .fields .v{padding-top:0}
+    .brand span{display:none}
+    nav.tabs{margin-left:0;width:100%}
+  }
+  @media print{
+    header.top{position:static}nav.tabs,.status{display:none}
+    body{background:#fff}.card{break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-in">
+    <div class="brand">自助变现产品日报<span>每天 5 个 · 六栏齐备</span></div>
+    <nav class="tabs">
+      <a class="primary" href="#today">今日 5 个</a>
+      <a href="#discovered">发现 List</a>
+      <a href="#pending">待论证</a>
+      <a href="#rejected">已放弃</a>
+      <a href="#rules">口径与约束</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ 今日交付 ============ -->
+  <section id="today">
+    <h2>今日交付 <span class="count">0 / 5</span></h2>
+    <p class="sub">每天正好 5 个具体产品。主角是<b>具体产品</b>：有名字、能打开、能看见它怎么收钱 —— 不是赛道，不是行业分析。</p>
+
+    <div class="status">
+      <span>⏳</span>
+      <div>
+        <b>首轮扫描尚未执行，本页 5 个名额为空。</b>
+        本页是交付管道的<b>骨架页</b>：版式、六栏、结论三态、口径与约束均已就位，
+        但<b>不包含任何未经核实的候选</b>——按角色边界，查不到就写查不到，绝不补位。
+        首轮扫描完成后（口径：<b>中国区 · 仅移动端 · 免费榜与付费榜同扫</b>）本页滚动刷新。
+      </div>
+    </div>
+
+    <h2 style="font-size:15px;margin:0 0 10px">基准率（挂在墙上）</h2>
+    <div class="bench">
+      <div class="cell"><div class="n bad">56.2%</div><div class="l">一人 + AICoding 做产品，月收入 &lt; 2 万</div></div>
+      <div class="cell"><div class="n bad">56.4%</div><div class="l">卡在获客这一环</div></div>
+      <div class="ask">任何候选都必须回答：<b>「为什么我不是那 56.2%？」</b>——答不上来的，进「已放弃」。</div>
+    </div>
+
+    <h2 style="font-size:15px;margin:26px 0 10px">候选位</h2>
+    <ol class="products">
+      <!-- 5 个候选位：待扫描填充 -->
+      <li class="card">
+        <div class="card-h">
+          <span class="no">01</span>
+          <span class="name muted">待首轮扫描填充</span>
+          <span class="chip blank">未扫描</span>
+        </div>
+        <div class="fields">
+          <div class="k">是什么</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">怎么收钱</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">模式为什么成立</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">我能不能做</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">上架到哪</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">证据出处</div><div class="v ev"><span class="empty">—</span></div>
+        </div>
+      </li>
+      <li class="card">
+        <div class="card-h">
+          <span class="no">02</span>
+          <span class="name muted">待首轮扫描填充</span>
+          <span class="chip blank">未扫描</span>
+        </div>
+        <div class="fields">
+          <div class="k">是什么</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">怎么收钱</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">模式为什么成立</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">我能不能做</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">上架到哪</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">证据出处</div><div class="v ev"><span class="empty">—</span></div>
+        </div>
+      </li>
+      <li class="card">
+        <div class="card-h">
+          <span class="no">03</span>
+          <span class="name muted">待首轮扫描填充</span>
+          <span class="chip blank">未扫描</span>
+        </div>
+        <div class="fields">
+          <div class="k">是什么</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">怎么收钱</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">模式为什么成立</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">我能不能做</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">上架到哪</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">证据出处</div><div class="v ev"><span class="empty">—</span></div>
+        </div>
+      </li>
+      <li class="card">
+        <div class="card-h">
+          <span class="no">04</span>
+          <span class="name muted">待首轮扫描填充</span>
+          <span class="chip blank">未扫描</span>
+        </div>
+        <div class="fields">
+          <div class="k">是什么</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">怎么收钱</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">模式为什么成立</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">我能不能做</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">上架到哪</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">证据出处</div><div class="v ev"><span class="empty">—</span></div>
+        </div>
+      </li>
+      <li class="card">
+        <div class="card-h">
+          <span class="no">05</span>
+          <span class="name muted">待首轮扫描填充</span>
+          <span class="chip blank">未扫描</span>
+        </div>
+        <div class="fields">
+          <div class="k">是什么</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">怎么收钱</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">模式为什么成立</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">我能不能做</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">上架到哪</div><div class="v"><span class="empty">—</span></div>
+          <div class="k">证据出处</div><div class="v ev"><span class="empty">—</span></div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ============ 滚动文件 1 ============ -->
+  <section id="discovered">
+    <h2>发现产品 List <span class="count">0 条</span></h2>
+    <p class="sub">滚动刷新。凡是扫描中被看见的具体产品都先登记在这里，不预设结论；随后分流到「待论证」或「已放弃」。</p>
+    <table>
+      <thead>
+        <tr><th>发现日期</th><th>产品名</th><th>平台</th><th>一句话是什么</th><th>收钱方式</th><th>去向</th><th>出处</th></tr>
+      </thead>
+      <tbody>
+        <tr class="empty-row"><td colspan="7">暂无记录 —— 首轮扫描后滚动填充。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ 滚动文件 2 ============ -->
+  <section id="pending">
+    <h2>待论证产品 <span class="count">0 条</span></h2>
+    <p class="sub">结论为 <span class="chip todo">✅ 待论证</span> 或 <span class="chip lead">⚠️ 线索</span> 的产品。⚠️ 必须注明<b>缺哪一栏</b>；缺栏未补齐前不算交付。</p>
+    <table>
+      <thead>
+        <tr><th>产品名</th><th>结论</th><th>缺哪栏</th><th>我方建议</th><th>依据</th><th>最近更新</th></tr>
+      </thead>
+      <tbody>
+        <tr class="empty-row"><td colspan="6">暂无记录 —— 首轮扫描后滚动填充。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ 滚动文件 3 ============ -->
+  <section id="rejected">
+    <h2>已放弃 <span class="count">0 条</span></h2>
+    <p class="sub">结论为 <span class="chip no">❌ 不可行</span> 的产品，每条必须写明<b>命中哪条出局信号</b>。这里不是垃圾场，是避免重复劳动的资产。</p>
+    <table>
+      <thead>
+        <tr><th>产品名</th><th>出局信号</th><th>判定依据</th><th>判定日期</th><th>可否翻案</th></tr>
+      </thead>
+      <tbody>
+        <tr class="empty-row"><td colspan="5">暂无记录 —— 首轮扫描后滚动填充。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ============ 口径与约束 ============ -->
+  <section id="rules">
+    <h2>口径与约束</h2>
+    <p class="sub">这部分决定「什么算候选」，比结论更重要。</p>
+    <div class="rules">
+      <div class="panel rule">
+        <h3>硬约束（筛掉 90% 候选）</h3>
+        <ul>
+          <li><b>C1 一人交付</b>：全链路靠「我一个人 + AI」跑完，获客线上自助、交付靠产品本身。排除线下签单 / 销售团队 / 地推 / 人工一对一 / 招投标 —— <b>与主体是个人还是公司无关</b>。</li>
+          <li><b>C2 主体</b>：现有「重启实业(深圳)」公司主体，或个人主体。</li>
+          <li><b>C3 变现</b>：线上自助付费，或广告变现。</li>
+          <li><b>C5 资金</b>：启动资金几万块量级。</li>
+          <li><b>C8 市场</b>：国内优先。</li>
+        </ul>
+      </div>
+
+      <div class="panel rule">
+        <h3>扫描口径（已收敛）</h3>
+        <ul>
+          <li>应用商店<b>只扫中国区</b>（cn 单区；us/jp/kr 暂缓，可恢复）。</li>
+          <li><b>只考虑移动端</b>：iOS / Android / 小程序 / H5；Windows / macOS / Steam 撤下。</li>
+          <li><b>免费榜必须与付费榜同扫</b>。</li>
+          <li>频率：每晚 <b>23:00–07:00 之间随机</b>扫描，不要形成可被平台识别的规律。</li>
+        </ul>
+      </div>
+
+      <div class="panel rule">
+        <h3>扫描渠道</h3>
+        <ul>
+          <li>应用商店：App Store、Google Play。</li>
+          <li><b>小红书（重点）</b>：搜索 + 笔记，需求常常先在这里被暴露；须能从笔记里提取可用信息。</li>
+          <li>社交媒体：微博、微信、抖音。</li>
+          <li>论坛社区：知乎、V2EX。</li>
+          <li>第三方数据：questmobile、阿拉丁指数、点点数据、新榜、七麦、appgrowing、蝉大师。</li>
+        </ul>
+      </div>
+
+      <div class="panel rule">
+        <h3>结论三态与角色边界</h3>
+        <ul>
+          <li><b>✅ 待论证</b> / <b>⚠️ 线索</b>（注明缺哪栏）/ <b>❌ 不可行</b>（写明命中哪条出局信号）。</li>
+          <li>只<b>找 + 论证</b>：不发明商业模式、不推演需求。</li>
+          <li>只给建议不拍板：建议深入验证 / 待验证 / 不建议推进 + 依据；<b>决策权永远在你</b>。</li>
+          <li>查不到就写查不到；「渠道不可用」结论必须附对照组；被推翻的结论登记进纠错台账。</li>
+        </ul>
+      </div>
+
+      <div class="panel rule">
+        <h3>交付形态</h3>
+        <ul>
+          <li>每天正好 <b>5 个产品</b>，每个必过六栏：是什么 / 怎么收钱 / 模式为什么成立 / 我能不能做 / 上架到哪 / 证据出处。</li>
+          <li><b>缺一栏不算交付。</b></li>
+          <li>「是什么」必须给谁用、干什么、解决什么具体麻烦 —— 不许只写「效率工具」这种品类名。</li>
+          <li>全部以 <b>HTML</b> 呈现，不用 md。</li>
+        </ul>
+      </div>
+
+      <div class="panel rule">
+        <h3>文件清单（滚动刷新）</h3>
+        <ul>
+          <li><code>index.html</code> —— 本页：每日 5 个产品的六栏论证。</li>
+          <li>发现产品 List（HTML）—— 待生成。</li>
+          <li>待论证产品（HTML）—— 待生成。</li>
+          <li>已放弃（HTML）—— 待生成。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 纠错台账 ============ -->
+  <section id="errata">
+    <h2>纠错台账 <span class="count">0 条</span></h2>
+    <p class="sub">被推翻的结论必须登记在此，避免同一错误重复发生。</p>
+    <table>
+      <thead>
+        <tr><th>登记日期</th><th>原结论</th><th>被什么推翻</th><th>修正后结论</th><th>教训</th></tr>
+      </thead>
+      <tbody>
+        <tr class="empty-row"><td colspan="5">暂无记录。</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>依据 <code>project.md</code> 生成 · 交付物为 HTML · 每天滚动刷新</div>
+    <div>首轮扫描：待执行 &nbsp;|&nbsp; 版本：v0 骨架</div>
+  </div>
+</footer>
+
+</body>
+</html>
